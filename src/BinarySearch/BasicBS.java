@@ -11,7 +11,7 @@ public class BasicBS {
 
 		int[] array = BasicBS.random(7, 1, 30, true);
 		
-		System.out.println("==> array: "+Arrays.toString(array));
+		System.out.println(Arrays.toString(array));
 
 		System.out.println("\n==> index of 7 : " + BasicBS.indexOf(array, 7));
 
@@ -25,20 +25,25 @@ public class BasicBS {
 			,{2, 4, 6, 8}
 			,{3, 5, 9, 10}
 		};
-		System.out.println("\n==> matrinx: [");
+		System.out.println("\nmatrix: [");
 		for(int i=0; i<matrix.length;i++){
 			System.out.println("\t"+Arrays.toString(matrix[i]));
 		}
 		System.out.println("]");
 		
-		System.out.println("==> index of 9 in matrix: "+ Arrays.toString(BasicBS.indexOfMatix(matrix, 9) )) ;
+		System.out.println("\n==> index of 9 in matrix: "+ Arrays.toString(BasicBS.indexOfMatix(matrix, 9) )) ;
 		
-		System.out.println("==> peak index in array"+Arrays.toString(array)+" : "+BasicBS.findAPeakIndex(array, 0, array.length-1));
+		System.out.println("\n==> peak index in array"+Arrays.toString(array)+" : "+BasicBS.findAPeakIndex(array, 0, array.length-1));
 		
 		
 		int[] a1 = BasicBS.random(5, 1, 10, true);
 		int[] a2 = BasicBS.random(5, 2, 15, true);
-		System.out.println("==> sort from "+Arrays.toString(a1)+","+Arrays.toString(a2));
+		System.out.println("\n\n "+Arrays.toString(a1)+","+Arrays.toString(a2));
+		int[] merged = BasicBS.mergeSortedArray(a1, a2);
+		System.out.println("\n==> merged: " + Arrays.toString(merged) );
+		
+		BasicBS.removeDuplicatesInSorted(merged);
+		System.out.println("\n==> removed duplicates: " + Arrays.toString(merged));
 	}
 	
 	
@@ -239,7 +244,51 @@ public class BasicBS {
 		return -1;
 	}
 
+	private static int removeDuplicatesInSorted(int[] array){
+		if(array.length == 0 || array == null){
+			return 0;
+		}
+		
+		int uniquePointer = 0;
+		for(int i=0; i<array.length; i++){
+			if(array[i] != array[uniquePointer]){
+				array[++uniquePointer] = array[i];
+			}
+		}
+	
+		for(int i=uniquePointer+1; i<array.length; i++){
+			array[i] = Integer.MIN_VALUE;
+		}
+		
+		return uniquePointer+1;
+	}
+	
 	private static int[] mergeSortedArray(int[] a1, int[] a2){
-		return new int[]{};
+		int[] result = new int[a1.length+a2.length];
+
+		int i=0, j=0;
+		while(i<a1.length && j<a2.length){
+			int a1c = a1[i];
+			int a2c = a2[j];
+			
+			if(a1c < a2c){
+				result[i+j] = a1c;
+				i++;
+			}else{
+				result[i+j] = a2c;
+				j++;
+			}
+		}
+
+		for(int m = i; m < a1.length ; m++){
+			result[j+m] = a1[m];
+		}
+		
+		for(int m = j; m < a2.length ; m++){
+			result[i+m] = a2[m];
+		}
+		
+		return result;
+		
 	}
 }
