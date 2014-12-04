@@ -1,16 +1,30 @@
 package DivideAndConquer;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
+import java.util.Stack;
 
 import BinarySearch.BasicBS;
+import DataStructure.BasicDS;
+import DataStructure.Node;
 
 public class BasicDAC {
 	
-	public void main(String[] args){
+	public static void main(String[] args){
 		
 		int[] array = BasicBS.random(7, 1, 30, true);
 		
 		System.out.println("\n==> peak index in array"+Arrays.toString(array)+" : "+BasicDAC.findAPeakIndex(array, 0, array.length-1));
+		
+		
+		Node root = BasicDS.generateBinaryTree(4, false, true);
+		
+		BasicDS.printTree(root);
+		
+		ArrayList<Integer> list = new ArrayList<Integer>();
+		System.out.println("\n==> preorder without recursion :" + Arrays.toString(BasicDAC.preOrderTraversalWithoutRecursion(root).toArray()));
+		System.out.println("\n==> preorder with    recursion :" + Arrays.toString(BasicDAC.preOrderTraversal(root).toArray()));
 	}
 	
 	//http://lintcode.com/en/problem/find-a-peak/
@@ -57,4 +71,51 @@ public class BasicDAC {
 		return -1;
 	}
 
+	public static List<Integer> preOrderTraversalWithoutRecursion(Node root){
+		
+		Stack<Node> stack = new Stack<Node>();
+		ArrayList<Integer> list = new ArrayList<Integer>();
+		
+		if(root == null){
+			return list;
+		}
+		
+		stack.push(root);
+		while(!stack.isEmpty()){
+			Node pop = stack.pop();
+			list.add((Integer) pop.data);
+			
+			if(pop.right!=null){
+				stack.push(pop.right);
+			}
+
+			if(pop.left!=null){
+				stack.push(pop.left);
+			}
+			
+		}
+		
+		return list;
+		
+	}
+
+	public static List<Integer> preOrderTraversal(Node root){
+		
+		List<Integer> list = new ArrayList<Integer>();
+		
+		if(root == null){
+			return list;
+		}
+		
+		list.add(root.data);
+		list.addAll(preOrderTraversal(root.left));
+		list.addAll(preOrderTraversal(root.right));
+		
+		
+		return list;
+	}
+
+	public static Node getLowestCommonAncestor(Node n1, Node n2){
+		return null;
+	}
 }
