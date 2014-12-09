@@ -6,7 +6,6 @@ import java.util.List;
 
 import DataStructure.Node;
 
-
 public class BTreePrinter {
 
 	public static void printNode(Node root) {

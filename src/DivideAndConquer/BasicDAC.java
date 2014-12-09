@@ -2,10 +2,8 @@ package DivideAndConquer;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
-import java.util.Stack;
 
-import BinarySearch.BasicBS;
+import Basic.Generator;
 import DataStructure.BasicDS;
 import DataStructure.Node;
 
@@ -13,7 +11,7 @@ public class BasicDAC {
 	
 	public static void main(String[] args){
 		
-		int[] array = BasicBS.random(7, 1, 30, true);
+		int[] array = Generator.intArray(7, 1, 30, true);
 		
 		System.out.println("\n==> peak index in array"+Arrays.toString(array)+" : "+FindAPeak.findAPeakIndex(array, 0, array.length-1));
 		
