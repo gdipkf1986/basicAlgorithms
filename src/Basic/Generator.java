@@ -20,6 +20,7 @@ public class Generator {
 		int[] result = new int[size];
 		for (int i = 0; i < size; i++) {
 			Integer val = min + (int) Math.round(Math.random() * max);
+			
 			result[i] = val;
 		}
 
@@ -55,6 +56,39 @@ public class Generator {
 		root.data = 100;
 		
 		binarySearchTree(root, 1, 150, 3);
+		
+		return root;
+	}
+
+	public static Node binaryTree(Integer maxDepth, Boolean complete, Boolean balanced){
+		Node root = new Node();
+		root.data = 0;
+		return binaryTree(root, maxDepth, complete, balanced);
+	}
+	
+	private static Node binaryTree(Node root, Integer maxDepth, Boolean complete, Boolean balanced){
+		
+		if(maxDepth<1) return root;
+		
+		double leftRandom = Math.random();
+		double rightRandom = Math.random();
+		
+		boolean hasLeft = leftRandom<=0.8;
+		boolean hasRight = rightRandom<=0.8;
+
+		if(hasLeft){
+			Node left = new Node();
+			root.left = left;
+			binaryTree(left, maxDepth-1, complete, balanced);
+		}
+		
+		Boolean skipRight = complete && !hasLeft;
+		
+		if(!skipRight && ( hasRight || (hasLeft && complete) ) ){
+			Node right = new Node();
+			root.right = right;
+			binaryTree(right, maxDepth-1, complete, balanced);
+		}
 		
 		return root;
 	}

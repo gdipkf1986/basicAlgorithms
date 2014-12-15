@@ -1,26 +1,25 @@
-package DivideAndConquer;
+package DataStructure;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Stack;
 
-import DataStructure.BasicDS;
-import DataStructure.Node;
+import Basic.Generator;
 
 public class PreOrderTraversal {
 
 	public static void main(String[] args) {
 		
-		Node root = BasicDS.generateBinaryTree(4, false, true);
-		BasicDS.printTree(root);
+		Node root = Generator.binaryTree(4, false, true);
+		root.print();
 		
 		System.out.println("\n==> preorder without recursion :" + Arrays.toString(PreOrderTraversal.preOrderTraversalWithoutRecursion(root).toArray()));
-		System.out.println("\n==> preorder with    recursion :" + Arrays.toString(PreOrderTraversal.preOrderTraversal(root).toArray()));
+		System.out.println("\n==> preorder with    recursion :" + Arrays.toString(PreOrderTraversal.preOrderTraversalRecursion(root).toArray()));
 
 	}
 
-	public static List<Integer> preOrderTraversal(Node root) {
+	public static List<Integer> preOrderTraversalRecursion(Node root) {
 
 		List<Integer> list = new ArrayList<Integer>();
 
@@ -29,8 +28,8 @@ public class PreOrderTraversal {
 		}
 
 		list.add(root.data);
-		list.addAll(preOrderTraversal(root.left));
-		list.addAll(preOrderTraversal(root.right));
+		list.addAll(preOrderTraversalRecursion(root.left));
+		list.addAll(preOrderTraversalRecursion(root.right));
 
 		return list;
 	}

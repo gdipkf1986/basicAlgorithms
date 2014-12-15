@@ -10,13 +10,14 @@ public class Subset {
 	public static void main(String[] args) {
 		
 		int[] array = Generator.intArray(4, 1, 15, true);
-		int[] array1 = {1,2,2,3,4};
 		
+		int[] array1 = {1,2,2,3,4};
 		Arrays.sort(array1);
 		
-		System.out.println(Arrays.toString(array1));
+		int[] arrayToBeProcess = array1;
+		System.out.println(Arrays.toString(arrayToBeProcess));
 
-		ArrayList<ArrayList<Integer>> subsets = dfs_subsets(array1);
+		ArrayList<ArrayList<Integer>> subsets = dfs_subsets(arrayToBeProcess);
 		Iterator<ArrayList<Integer>> iterator = subsets.iterator();
 		while (iterator.hasNext()) {
 			ArrayList<Integer> next = iterator.next();
@@ -49,15 +50,15 @@ public class Subset {
 		//将本分枝结果加入最终结果集  (假设本分枝所在层是第 N 层)
 		allSubsets.add(new ArrayList<Integer>(currentLvSubset));
 
-		//搜索下一层所有的分支, 即  N+1 层所有分枝 
+		//搜索当前分枝的下一层(即  N+1 层)所有的子分支 
 		for (int i = candidateStartIndex; i < candidates.length; i++) {
 			
-			//剪枝: 去掉重复元素, 因为己经排序, 所以只要和前一个元素对比就可以了.
+			//剪枝: 去掉重复元素, 因为己经排序, 所以相同元素只考虑第一个
 			if (i != candidateStartIndex && candidates[i] == candidates[i - 1]) {
 				continue;
 			}
 			
-			currentLvSubset.add(candidates[i]); // currentLvSubset 己经是 N+1 某个分支的结果
+			currentLvSubset.add(candidates[i]); // 进入某条边(某个分枝)
 			dfs_subsetHelper(candidates, i + 1, allSubsets, currentLvSubset); // 递归的处理 N+1 层
 			currentLvSubset.remove(currentLvSubset.size() - 1); // 回退到 N 层, 以便 for 循环进入其它分枝
 		}
